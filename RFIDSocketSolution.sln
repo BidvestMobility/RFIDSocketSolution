@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFIDClientSocket", "RFIDClientSocket\RFIDClientSocket.csproj", "{D0B01591-C204-4422-A4D9-6E421A70E29E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFIDServerSocket", "RFIDServerSocket\RFIDServerSocket.csproj", "{0C90CA90-52AC-42D8-8A29-C5C466EED691}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncClient", "AsyncClient\AsyncClient.csproj", "{A4EEDF9B-ECF8-4215-957C-9DAB9465DF4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncServer", "AsyncServer\AsyncServer.csproj", "{C00BC817-B8AC-4F74-9FAC-3D4731353EE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0B01591-C204-4422-A4D9-6E421A70E29E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B01591-C204-4422-A4D9-6E421A70E29E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B01591-C204-4422-A4D9-6E421A70E29E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B01591-C204-4422-A4D9-6E421A70E29E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C90CA90-52AC-42D8-8A29-C5C466EED691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C90CA90-52AC-42D8-8A29-C5C466EED691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C90CA90-52AC-42D8-8A29-C5C466EED691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C90CA90-52AC-42D8-8A29-C5C466EED691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4EEDF9B-ECF8-4215-957C-9DAB9465DF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4EEDF9B-ECF8-4215-957C-9DAB9465DF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4EEDF9B-ECF8-4215-957C-9DAB9465DF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4EEDF9B-ECF8-4215-957C-9DAB9465DF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C00BC817-B8AC-4F74-9FAC-3D4731353EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C00BC817-B8AC-4F74-9FAC-3D4731353EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C00BC817-B8AC-4F74-9FAC-3D4731353EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C00BC817-B8AC-4F74-9FAC-3D4731353EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C391C042-1E0E-4CCC-BBCB-0C24E4318544}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+C:\Development\RFIDSocketSolution\RFIDClientSocket\bin\Debug\RFIDClientSocket.exe
+C:\Development\RFIDSocketSolution\RFIDClientSocket\bin\Debug\RFIDClientSocket.pdb
+C:\Development\RFIDSocketSolution\RFIDClientSocket\obj\Debug\RFIDClientSocket.csprojAssemblyReference.cache
+C:\Development\RFIDSocketSolution\RFIDClientSocket\obj\Debug\RFIDClientSocket.csproj.CoreCompileInputs.cache
+C:\Development\RFIDSocketSolution\RFIDClientSocket\obj\Debug\RFIDClientSocket.exe
+C:\Development\RFIDSocketSolution\RFIDClientSocket\obj\Debug\RFIDClientSocket.pdb

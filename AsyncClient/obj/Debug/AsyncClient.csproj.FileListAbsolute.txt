@@ -1,0 +1,7 @@
+C:\Development\RFIDSocketSolution\AsyncClient\bin\Debug\AsyncClient.exe
+C:\Development\RFIDSocketSolution\AsyncClient\bin\Debug\AsyncClient.pdb
+C:\Development\RFIDSocketSolution\AsyncClient\obj\Debug\AsyncClient.csprojAssemblyReference.cache
+C:\Development\RFIDSocketSolution\AsyncClient\obj\Debug\AsyncClient.csproj.CoreCompileInputs.cache
+C:\Development\RFIDSocketSolution\AsyncClient\obj\Debug\AsyncClient.exe
+C:\Development\RFIDSocketSolution\AsyncClient\obj\Debug\AsyncClient.pdb
+C:\Development\RFIDSocketSolution\AsyncClient\bin\Debug\AsyncClient.exe.config
