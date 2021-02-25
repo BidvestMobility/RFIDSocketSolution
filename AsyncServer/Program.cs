@@ -1,5 +1,7 @@
-﻿using AsyncServer.Properties;
+﻿using AsyncServer;
+using AsyncServer.Properties;
 using System;
+using System.Collections;
 using System.Configuration;
 using System.Net;
 using System.Net.Sockets;
@@ -27,21 +29,27 @@ public class AsynchronousSocketListener
     // Thread signal.  
     public static ManualResetEvent allDone = new ManualResetEvent(false);
 
+    private static bool ContinueReclaim = true;
+    private static Thread ThreadReclaim;
+    private static ArrayList ClientSockets;
+    static int ClientNbr = 0;
+
     public AsynchronousSocketListener()
     {
     }
 
     public static void StartListening()
     {
-
-        Console.WriteLine(Settings.Default.mySetting1);
-
         // Establish the local endpoint for the socket.  
         // The DNS name of the computer  
         // running the listener is "host.contoso.com".  
         IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
         IPAddress ipAddress = ipHostInfo.AddressList[0];
         IPEndPoint localEndPoint = new IPEndPoint(ipAddress, Settings.Default.PortNumber);
+
+        ClientSockets = new ArrayList();
+        //Thread ThreadReclaim = new Thread(new ThreadStart(Reclaim));
+        //ThreadReclaim.Start();
 
         // Create a TCP/IP socket.  
         Socket listener = new Socket(ipAddress.AddressFamily,
@@ -53,29 +61,59 @@ public class AsynchronousSocketListener
             listener.Bind(localEndPoint);
             listener.Listen(100);
 
-            while (true)
+            int TestingCycle = 3;
+
+            while (TestingCycle > 0)
             {
-                // Set the event to nonsignaled state.  
-                allDone.Reset();
+            // Set the event to nonsignaled state.  
+            //allDone.Reset();
 
-                // Start an asynchronous socket to listen for connections.  
-                Console.WriteLine("Waiting for a connection...");
-                listener.BeginAccept(
-                    new AsyncCallback(AcceptCallback),
-                    listener);
+            // Start an asynchronous socket to listen for connections.  
+            //Console.WriteLine("Waiting for a connection...");
+            //listener.BeginAccept(new AsyncCallback(AcceptCallback),listener);
 
-                // Wait until a connection is made before continuing.  
-                allDone.WaitOne();
+            // Wait until a connection is made before continuing.  
+            //allDone.WaitOne();
+
+            /////////////////////
+            //TcpClient handler = listener.AcceptTcpClient();
+
+            //if (listener != null)
+              //  {
+                    Console.WriteLine("Client#{0} accepted!", ++ClientNbr);
+                    // An incoming connection needs to be processed.
+                    lock (ClientSockets.SyncRoot)
+                    {
+                        int i = ClientSockets.Add(new ClientHandler(listener));
+                        ((ClientHandler)ClientSockets[i]).Start();
+                    }
+
+                //  }
+                --TestingCycle;
+                //else break;
+                /////////////////////
             }
+            Console.ReadLine();
+            //////////////////////
+            //listener.Stop();
 
+            ContinueReclaim = false;
+            ThreadReclaim.Join();
+
+            foreach (Object Client in ClientSockets)
+            {
+                ((ClientHandler)Client).Stop();
+            }
+            /////////////////////
         }
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
+            Console.ReadLine();
         }
 
-        Console.WriteLine("\nPress ENTER to continue...");
-        Console.Read();
+        //Console.WriteLine("\nPress ENTER to continue...");
+        //Console.Read();
 
     }
 
@@ -98,6 +136,9 @@ public class AsynchronousSocketListener
     public static void ReadCallback(IAsyncResult ar)
     {
         String content = String.Empty;
+        //ThreadReclaim = new Thread(new ThreadStart(Reclaim));
+        ThreadReclaim.Start();
+
 
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
@@ -106,6 +147,8 @@ public class AsynchronousSocketListener
 
         // Read data from the client socket.
         int bytesRead = handler.EndReceive(ar);
+
+
 
         if (bytesRead > 0)
         {
@@ -118,12 +161,11 @@ public class AsynchronousSocketListener
             content = state.sb.ToString();
             if (content.IndexOf("end") > -1)
             {
-                
+                Console.WriteLine("Scanning ended...");
                 // All the data has been read from the
                 // client. Display it on the console.  
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     content.Length, content);
-                Console.WriteLine("Scanning ended...");
                 // Echo the data back to the client.  
                 Send(handler, content);
 
@@ -133,14 +175,34 @@ public class AsynchronousSocketListener
                 if (content.IndexOf("start") > -1)
                 {
                     state.sb.Replace("start", "");
-                    Console.WriteLine("Scanning started...");
+                    //Console.WriteLine("Scanning started...");
+                    Console.WriteLine("Client#{0} started scanning!", ++ClientNbr);
                 }
-                
+
                 // Not all data received. Get more.  
                 handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
-                
+
+                //////////////////////
+                    
+                    // An incoming connection needs to be processed.
+                    lock (ClientSockets.SyncRoot)
+                    {
+                        int i = ClientSockets.Add(new ClientHandler(handler));
+
+                        ((ClientHandler)ClientSockets[i]).Start();
+                    }
+                ////////////////////////////////
             }
+        }
+
+        //listener.Stop();
+        ContinueReclaim = false;
+        ThreadReclaim.Join();
+
+        foreach (Object Client in ClientSockets)
+        {
+            ((ClientHandler)Client).Stop();
         }
     }
 
@@ -172,6 +234,27 @@ public class AsynchronousSocketListener
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
+            Console.ReadLine();
+        }
+    }
+
+    private static void Reclaim()
+    {
+        while (ContinueReclaim)
+        {
+            lock (ClientSockets.SyncRoot)
+            {
+                for (int x = ClientSockets.Count - 1; x >= 0; x--)
+                {
+                    Object Client = ClientSockets[x];
+                    if (!((ClientHandler)Client).Alive)
+                    {
+                        ClientSockets.Remove(Client);
+                        Console.WriteLine("A client left");
+                    }
+                }
+            }
+            Thread.Sleep(200);
         }
     }
 

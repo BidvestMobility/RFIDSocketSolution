@@ -67,7 +67,7 @@ public class AsynchronousClient
                 //receiveDone.WaitOne();
 
                 // Write the response to the console.  
-                Console.WriteLine("Response received : {0}", response);
+                //Console.WriteLine("Response received : {0}", response);
             }
                 // Release the socket.  
                 client.Shutdown(SocketShutdown.Both);
@@ -147,6 +147,7 @@ public class AsynchronousClient
                 if (state.sb.Length > 1)
                 {
                     response = state.sb.ToString();
+                    Console.WriteLine("Response received : {0}", response);
                 }
                 // Signal that all bytes have been received.  
                 receiveDone.Set();
@@ -177,7 +178,7 @@ public class AsynchronousClient
 
             // Complete sending the data to the remote device.  
             int bytesSent = client.EndSend(ar);
-            Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+            //Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
             // Signal that all bytes have been sent.  
             sendDone.Set();
